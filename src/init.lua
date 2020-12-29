@@ -224,7 +224,7 @@ function Octree:GetSize()
         if v.ClassName == self.ClassName then
             size = size + v:GetSize()
         else
-            size = size + 1
+            size += 1
         end
     end
     return size
