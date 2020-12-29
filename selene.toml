@@ -1,0 +1,8 @@
+std = "roblox+testez"
+
+[rules]
+empty_if = "allow"
+unused_variable = "allow"
+undefined_variable = "warn"
+multiple_statements = "allow"
+incorrect_standard_library_use = "warn"

@@ -46,10 +46,6 @@ local OCTANT_MAP = {
     }
 }
 
-local function isClose(a, b, eps)
-    return (a - b).Magnitude <= eps
-end
-
 local function getOctant(center, pos)
     local x = (pos.X <= center.X) and 1 or 2
     local y = (pos.Y <= center.Y) and 1 or 2
@@ -172,7 +168,7 @@ end
 function Octree:GetNearestNeighbor(coordinate, max_dist)
     assert(typeof(coordinate) == "Vector3", "Coordinates must be Vector3!")
     max_dist = max_dist or math.huge
-    local best, dist = recursiveNN(self, coordinate, nil, math.huge)
+    local best = recursiveNN(self, coordinate, nil, math.huge)
     if best and (coordinate - best._coordinate).Magnitude <= max_dist then
         return best._data, best._coordinate
     end
@@ -206,7 +202,6 @@ function Octree:_RemoveChild(child)
         self._coordinate = nil
     end
     local childCount = self._data and 1 or 0
-    local onlyChild = (self._data and self) or nil
     for k, v in pairs(self._children) do
         if v == child then
             if child._data then
@@ -215,8 +210,7 @@ function Octree:_RemoveChild(child)
             self._children[k] = nil
             v:Destroy()
         else
-            childCount = childCount + 1
-            onlyChild = v
+            childCount += 1
         end
     end
     if childCount <= 0 and self._parent and not self._data then
@@ -226,7 +220,7 @@ end
 
 function Octree:GetSize()
     local size = (self._data and 1) or 0
-    for k, v in pairs(self._children) do
+    for _, v in pairs(self._children) do
         if v.ClassName == self.ClassName then
             size = size + v:GetSize()
         else

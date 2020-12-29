@@ -1,0 +1,8 @@
+{
+    "editor.detectIndentation": false,
+	"editor.insertSpaces": false,
+	"rojo.releaseBranch": "6.x",
+	"files.trimTrailingWhitespace": true,
+	"files.eol": "\n",
+	"files.insertFinalNewline": true
+}
